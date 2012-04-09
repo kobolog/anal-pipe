@@ -93,7 +93,6 @@ private:
 };
 
 // Helper function to create analyzers with template arguments deduced.
-// --------------------------------------------------------------------
 
 template<class Parser>
 analyzer<Parser> make_analyzer(const Parser& parser) {
@@ -109,7 +108,6 @@ int main(int argc, const char * argv[]) {
     po::variables_map vm;
 
     // Prepare the command line parsers
-    // --------------------------------
 
     hidden_options.add_options()
         ("logfile", po::value<std::string>());
@@ -125,8 +123,9 @@ int main(int argc, const char * argv[]) {
 
     combined.add(hidden_options).add(options);
 
+    // Parse the command line
+    
     try {
-        // Parse the command line
         po::store(
             po::command_line_parser(argc, argv).
             options(combined).
@@ -153,6 +152,7 @@ int main(int argc, const char * argv[]) {
     }
 
     // Logfile should be specified at all times.
+
     if(!vm.count("logfile")) {
         std::cerr << "error: no file specified" << std::endl;
         return EXIT_FAILURE;
@@ -161,6 +161,7 @@ int main(int argc, const char * argv[]) {
     fs::path filepath(vm["logfile"].as<std::string>());
 
     // Ensure that the filename specified is an actual file.
+
     if(!fs::exists(filepath) && !fs::is_regular(filepath)) {
         std::cerr << "error: '" << filepath.string() << "' doesn't seem to be a file." << std::endl;
         return EXIT_FAILURE;
@@ -169,6 +170,7 @@ int main(int argc, const char * argv[]) {
     boost::shared_ptr<fs::ifstream> input = boost::make_shared<fs::ifstream>(filepath);
     
     // We might not have the required priveleges to read it.
+
     if(!input->good()) {
         std::cerr << "error: unable to open '" << filepath.string() << "'" << std::endl;
         return EXIT_FAILURE;
@@ -180,6 +182,7 @@ int main(int argc, const char * argv[]) {
 
     // This is a hack to workaround the boost::regex design shortcoming, as it
     // doesn't return the named match group names in the match results.
+
     keys += "ip", "ident", "user", "time", "method", "url", "protocol",
             "code", "size", "referrer", "useragent";
 
@@ -189,8 +192,7 @@ int main(int argc, const char * argv[]) {
 
     auto analyzer = make_analyzer(parser);
 
-    // Attach the required analysis objects to the analyzer.
-    // -----------------------------------------------------
+    // Attach the requested analysis objects to the analyzer.
 
     if(vm.count("distribution-of")) {
         std::vector<std::string> fields = vm["distribution-of"].as< std::vector<std::string> >();
@@ -219,6 +221,7 @@ int main(int argc, const char * argv[]) {
     line_iterator begin(input), end;
     
     // Parse and show the results.
+
     analyzer.run(begin, end);
     analyzer.dump(std::cout); 
 

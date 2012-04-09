@@ -37,12 +37,15 @@ struct qps_by_url: public analysis_concept {
         );
 
         // There might be only one record in the logfile.
+
         if(start.empty() || end.empty()) {
             std::cerr << "error: insufficient time slice" << std::endl;
             return;
         }
 
         struct tm tm_start, tm_end;
+
+        // Parse the time string into a tm struct.
 
         if(!::strptime(start.c_str(), "%d/%b/%Y:%H:%M:%S", &tm_start) ||
            !::strptime(end.c_str(), "%d/%b/%Y:%H:%M:%S", &tm_end))
@@ -51,10 +54,14 @@ struct qps_by_url: public analysis_concept {
             return;
         }
         
+        // Convert separated tm struct values into a UNIX timestamp.
+
         time_t epoch_start = ::mktime(const_cast<struct tm *>(&tm_start)),
                epoch_end = ::mktime(const_cast<struct tm *>(&tm_end));
 
         double diff = ::difftime(epoch_end, epoch_start);
+
+        // Sort the map and print the results.
 
         while(!heap.empty()) {
             stream << "\t" << heap.top().first << ": "

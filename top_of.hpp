@@ -23,6 +23,8 @@ struct top_of: public analysis_concept {
     void dump(std::ostream& stream) const {
         stream << "Top " << limit << " of '" << key << "':" << std::endl;
         
+        // Sort the map and print the results up to the specified limit.
+        
         sorted_heap heap;
 
         std::copy(

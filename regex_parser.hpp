@@ -6,7 +6,6 @@
 #include "analysis_concept.hpp"
 
 // Simple and slow regex parser based on boost::regex.
-// ---------------------------------------------------
 
 namespace linkedin {
 

@@ -5,9 +5,8 @@
 
 #include "common.hpp"
 
-// priority_queue-based sorted heap and auxiliary machinery to
+// PriorityQueue based sorted heap and auxiliary machinery to
 // convert key-sorted aggregation maps to a value-sorted container.
-// ----------------------------------------------------------------
 
 namespace linkedin {
 

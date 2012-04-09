@@ -6,7 +6,6 @@
 #include "common.hpp"
 
 // std::istream iterator yielding one line at a time.
-// --------------------------------------------------
 
 namespace linkedin {
 

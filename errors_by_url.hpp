@@ -25,6 +25,8 @@ struct errors_by_url: public analysis_concept {
     void dump(std::ostream& stream) const {
         stream << "Errors by URL: " << std::endl;
 
+        // Sort the maps and print the results.
+        
         for(container_type::const_iterator it = aggregate.begin();
             it != aggregate.end();
             ++it)

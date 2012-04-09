@@ -6,7 +6,6 @@
 #include "common.hpp"
 
 // Base class to derive from for analysis objects.
-// -----------------------------------------------
 
 namespace linkedin {
 

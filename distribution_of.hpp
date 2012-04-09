@@ -26,6 +26,8 @@ struct distribution_of: public analysis_concept {
     void dump(std::ostream& stream) const {
         stream << "Distribution of '" << key << "':" << std::endl;
 
+        // Sort the map and print the results.
+
         sorted_heap heap;
 
         std::copy(
