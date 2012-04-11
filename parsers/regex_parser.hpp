@@ -30,8 +30,7 @@ public:
         m_keys(keys)
     { }
 
-    parsed_line operator()(const std::string& line) {
-        parsed_line parsed;
+    void operator()(const std::string& line, parsed_line& parsed) {
         boost::smatch match_results;
 
         if(boost::regex_match(line, match_results, m_regex)) {
@@ -43,8 +42,6 @@ public:
         } else {
             std::cerr << "error: unable to parse line: " << line << std::endl;
         }
-        
-        return parsed;
     }
 
 private:

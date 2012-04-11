@@ -1,20 +1,20 @@
 #include <boost/assign/std/vector.hpp>
-
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/operations.hpp>
-
 #include <boost/make_shared.hpp>
-
 #include <boost/program_options.hpp>
 
 #include "line_iterator.hpp"
-#include "regex_parser.hpp"
 
-#include "distribution_of.hpp"
-#include "errors_by_url.hpp"
-#include "top_of.hpp"
-#include "qps_by_url.hpp"
+#include "analysis/distribution_of.hpp"
+#include "analysis/errors_by_url.hpp"
+#include "analysis/top_of.hpp"
+#include "analysis/qps_by_url.hpp"
+#include "analysis/windowed_qps.hpp"
+
+#include "parsers/regex_parser.hpp"
+#include "parsers/stream_parser.hpp"
 
 using namespace linkedin;
 
@@ -64,8 +64,10 @@ public:
 
     template<class InputIterator>
     void run(InputIterator begin, InputIterator end) {
+        parsed_line parsed;
+        
         while(begin != end) {
-            parsed_line parsed(m_parser(*begin));
+            m_parser(*begin, parsed);
 
             if(!parsed.empty()) {
                 std::for_each(
@@ -176,6 +178,10 @@ int main(int argc, const char * argv[]) {
         return EXIT_FAILURE;
     }
 
+    /* Regex parser
+     * ------------
+     *  Validating and reusable, but slow.
+
     using namespace boost::assign;
 
     std::vector<std::string> keys;
@@ -189,6 +195,9 @@ int main(int argc, const char * argv[]) {
     regex_parser parser("(?<ip>[0-9.:a-f]+) (?<ident>[^ ]+) (?<user>[^ ]+) \\[(?<time>[^ ]+) [+-][0-9]{4}\\] \"(?<method>[A-Z]+) " \
                         "(?<url>.+?) (?<protocol>.+?)\" (?<code>[0-9]+) (?<size>[-0-9]+) \"(?<referrer>.+)\" \"(?<useragent>.+)\"$",
                         keys);
+    */
+
+    stream_parser parser;
 
     auto analyzer = make_analyzer(parser);
 
