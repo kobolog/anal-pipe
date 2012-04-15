@@ -25,7 +25,7 @@ struct top_of: public analysis_concept {
         
         // Sort the map and print the results up to the specified limit.
         
-        sorted_heap heap;
+        kv_heap<std::string, uint64_t> heap;
 
         std::copy(
             aggregate.begin(),

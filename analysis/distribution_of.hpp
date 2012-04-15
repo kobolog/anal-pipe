@@ -28,7 +28,7 @@ struct distribution_of: public analysis_concept {
 
         // Sort the map and print the results.
 
-        sorted_heap heap;
+        kv_heap<std::string, uint64_t> heap;
 
         std::copy(
             aggregate.begin(),

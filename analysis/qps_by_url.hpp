@@ -28,7 +28,7 @@ struct qps_by_url: public analysis_concept {
     void dump(std::ostream& stream) const {
         stream << "QPS by URL:" << std::endl;
 
-        sorted_heap heap;
+        kv_heap<std::string, uint64_t> heap;
 
         std::copy(
             aggregate.begin(),

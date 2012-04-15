@@ -119,6 +119,7 @@ int main(int argc, const char * argv[]) {
     options.add_options()
         ("distribution-of", po::value< std::vector<std::string> >(), "Show distribution of a specified field")
         ("top-of", po::value< std::vector<std::string> >(), "Show top ten entities of a specified field")
+        ("windowed-qps", po::value<long>(), "Show QPS divided by time periods, in seconds")
         ("errors-by-url", "Show URLs grouped by errors")
         ("qps-by-url", "Show QPS grouped by URL")
         ("help,h", "Show this message");
@@ -225,6 +226,10 @@ int main(int argc, const char * argv[]) {
 
     if(vm.count("qps-by-url")) {
         analyzer += boost::make_shared<qps_by_url>();
+    }
+
+    if(vm.count("windowed-qps")) {
+        analyzer += boost::make_shared<windowed_qps>(vm["windowed-qps"].as<long>());
     }
 
     line_iterator begin(input), end;

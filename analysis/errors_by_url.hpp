@@ -33,7 +33,7 @@ struct errors_by_url: public analysis_concept {
         {
             stream << "\tCode " << it->first << ":" << std::endl;
 
-            sorted_heap heap;
+            kv_heap<std::string, uint64_t> heap;
 
             std::copy(
                 it->second.begin(),

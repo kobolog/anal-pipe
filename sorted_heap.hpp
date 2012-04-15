@@ -10,19 +10,19 @@
 
 namespace linkedin {
 
-typedef std::pair<std::string, uint64_t> heap_element;
-
-struct heap_compare {
-    bool operator()(const heap_element& a, const heap_element& b) {
+struct kv_heap_compare {
+    template<class T>
+    bool operator()(const T& a, const T& b) {
         return a.second < b.second;
     }
 };
 
-typedef std::priority_queue<
-    heap_element,
-    std::vector<heap_element>,
-    heap_compare
-> sorted_heap;
+template<class T, class U>
+using kv_heap = std::priority_queue<
+    std::pair<T, U>,
+    std::vector< std::pair<T, U> >,
+    kv_heap_compare
+>;
 
 template<class Container>
 struct push_iterator:
