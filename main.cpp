@@ -104,7 +104,7 @@ analyzer<Parser> make_analyzer(const Parser& parser) {
 namespace fs = boost::filesystem;
 namespace po = boost::program_options;
 
-int main(int argc, const char * argv[]) {
+int main(int argc, char * argv[]) {
     po::options_description hidden_options, options, combined;
     po::positional_options_description positional;
     po::variables_map vm;

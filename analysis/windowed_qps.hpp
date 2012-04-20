@@ -120,13 +120,16 @@ struct windowed_qps: public analysis_concept {
 
     void dump(std::ostream& stream) const {
         stream << "QPS by " << step.total_seconds() << "-second periods:" << std::endl;
-    
-        for(auto&& it: aggregate) {
-            stream << "\t" << it.first << ":" << std::endl
-                   << "\t\tMin: " << it.second.min << std::endl
-                   << "\t\tMax: " << it.second.max << std::endl
-                   << "\t\tMean: " << it.second.mean << std::endl
-                   << "\t\tMedian: " << it.second.median << std::endl;
+   
+        for(container_type::const_iterator it = aggregate.begin();
+            it != aggregate.end();
+            ++it)
+        { 
+            stream << "\t" << it->first << ":" << std::endl
+                   << "\t\tMin: " << it->second.min << std::endl
+                   << "\t\tMax: " << it->second.max << std::endl
+                   << "\t\tMean: " << it->second.mean << std::endl
+                   << "\t\tMedian: " << it->second.median << std::endl;
         }
     }
 

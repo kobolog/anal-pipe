@@ -17,12 +17,11 @@ struct kv_heap_compare {
     }
 };
 
-template<class T, class U>
-using kv_heap = std::priority_queue<
-    std::pair<T, U>,
-    std::vector< std::pair<T, U> >,
+typedef std::priority_queue<
+    std::pair<std::string, uint64_t>,
+    std::vector< std::pair<std::string, uint64_t> >,
     kv_heap_compare
->;
+> kv_heap;
 
 template<class Container>
 struct push_iterator:

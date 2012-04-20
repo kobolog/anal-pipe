@@ -28,7 +28,7 @@ struct qps_by_url: public analysis_concept {
     void dump(std::ostream& stream) const {
         stream << "QPS by URL:" << std::endl;
 
-        kv_heap<std::string, uint64_t> heap;
+        kv_heap heap;
 
         std::copy(
             aggregate.begin(),
@@ -39,7 +39,7 @@ struct qps_by_url: public analysis_concept {
         // There might be only one record in the logfile.
 
         if(start.empty() || end.empty()) {
-            std::cerr << "error: insufficient time slice" << std::endl;
+            stream << "error: insufficient time slice" << std::endl;
             return;
         }
 
@@ -50,7 +50,7 @@ struct qps_by_url: public analysis_concept {
         if(!::strptime(start.c_str(), "%d/%b/%Y:%H:%M:%S", &tm_start) ||
            !::strptime(end.c_str(), "%d/%b/%Y:%H:%M:%S", &tm_end))
         {
-            std::cerr << "error: failed to parse timings" << std::endl;
+            stream << "error: failed to parse timings" << std::endl;
             return;
         }
         
